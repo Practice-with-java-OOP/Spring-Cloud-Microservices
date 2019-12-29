@@ -34,6 +34,7 @@ public class SwaggerProxyConfig {
             resources.add(createResource("employee-service", "/employee/v2/api-docs", "2.0"));
             resources.add(createResource("department-service", "/department/v2/api-docs", "2.0"));
             resources.add(createResource("organization-service", "/organization/v2/api-docs", "2.0"));
+            resources.add(createResource("auth-service", "/uaa/v2/api-docs", "2.0"));
             return resources;
         };
     }

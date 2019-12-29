@@ -5,5 +5,16 @@ spring:
     config:
       uri: http://localhost:8088
 
+security:
+  oauth2:
+    client:
+      client-id: organization-service
+      client-secret: secret
+      #      scope: read
+      access-token-uri: http://localhost:8090/oauth/token
+      user-authorization-uri: http://localhost:8090/oauth/authorize
+    resource:
+      token-info-uri: http://localhost:8090/oauth/check_token
+
 server:
   port: 8020

@@ -8,6 +8,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @EnableZuulProxy
 @EnableSwagger2
+//@EnableResourceServer
 public class ProxyGatewayApplication {
     public static void main(String[] args) {
         SpringApplication.run(ProxyGatewayApplication.class, args);

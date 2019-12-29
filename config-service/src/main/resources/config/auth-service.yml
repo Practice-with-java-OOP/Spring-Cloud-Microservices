@@ -1,0 +1,53 @@
+#server:
+#  port: 8030
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8061/eureka/
+      
+logging:
+  pattern: 
+    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+
+spring:
+  #datasource
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/registration_service?autoReconnect=true&useSSL=false&useUnicode=yes&characterEncoding=UTF-8
+    username: root
+    password: root123456
+
+  jpa:
+    open-in-view: true
+    show_sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        hbm2ddl:
+          auto: none
+        naming:
+          physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+          implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+        jdbc:
+          batch_size: 200
+          batch_versioned_data: true
+        order_inserts: true
+        order_updates: true
+        generate_statistics: true
+        use_sql_comments: true
+        format_sql: true
+        enable_lazy_load_no_trans: true
+
+app:
+  jwt:
+    secret: 5d66670787ff43778785318f5a12f8c0
+    avlPeriod: 24h # 24h
+    header: Authorization
+    tokenPrefix: Bearer
+
+security:
+  oauth2:
+    client:
+      client-id: 6cb3c4c7-ba5a-4568-bd78-5686daaf94ea1111
+      client-secret: 5bc782fb-be5d-41e0-ac7d-5cd2828981551111
