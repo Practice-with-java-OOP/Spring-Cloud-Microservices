@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -20,6 +23,9 @@ public class EmployeeController {
 
     @Autowired
     EmployeeRepository repository;
+
+    @Autowired
+    private HttpServletRequest httpServletRequest;
 
     @PostMapping("/")
     public Employee add(@RequestBody Employee employee) {
@@ -34,7 +40,8 @@ public class EmployeeController {
     }
 
     @GetMapping("/")
-    public List<Employee> findAll() {
+    public List<Employee> findAll(@ApiIgnore Principal principal) {
+        httpServletRequest.getHeader("Authorization");
         LOGGER.info("Employee find");
         return repository.findAll();
     }
@@ -50,5 +57,4 @@ public class EmployeeController {
         LOGGER.info("Employee find: organizationId={}", organizationId);
         return repository.findByOrganization(organizationId);
     }
-
 }

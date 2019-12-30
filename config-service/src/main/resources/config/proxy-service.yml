@@ -11,12 +11,14 @@ logging:
     console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
               
 zuul:
+  sensitive-headers: Cookie,Set-Cookie
   host:
     time-to-live: -1
     connect-timeout-millis: 60000
     max-per-route-connections: 10000
     max-total-connections: 5000
   routes:
+    sensitiveHeaders: Cookie,Set-Cookie
     department:
       path: /department/**
       serviceId: department-service
@@ -27,6 +29,7 @@ zuul:
       path: /organization/**
       serviceId: organization-service
     auth:
+#      sensitiveHeaders: Cookie,Set-Cookie
       path: /uaa/**
       serviceId: auth-service
 
