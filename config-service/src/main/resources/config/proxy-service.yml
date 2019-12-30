@@ -33,6 +33,15 @@ zuul:
       path: /uaa/**
       serviceId: auth-service
 
+gateway:
+  cors:
+    allowed-origins: '*'
+    allowed-methods: 'GET,HEAD,POST,PUT,DELETE,OPTIONS,PATCH'
+    allowed-headers: '*'
+    exposed-headers: 'Content-Type,Authorization,Content-Length,X-Requested-With,Link,X-Total-Count'
+    allow-credentials: true
+    max-age: 3600
+
 ribbon:
   ConnectTimeout: 600000
   ReadTimeout: 600000
