@@ -1,7 +1,7 @@
 package com.syphan.practice.auth.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.syphan.practice.auth.base.BaseEntity;
+import com.syphan.common.api.base.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

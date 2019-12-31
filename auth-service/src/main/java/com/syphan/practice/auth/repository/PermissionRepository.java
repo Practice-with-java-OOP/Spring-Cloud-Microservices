@@ -1,6 +1,6 @@
 package com.syphan.practice.auth.repository;
 
-import com.syphan.practice.auth.base.JpaQueryRepository;
+import com.syphan.common.dao.dao.JpaQueryRepository;
 import com.syphan.practice.auth.model.Permission;
 import org.springframework.stereotype.Repository;
 

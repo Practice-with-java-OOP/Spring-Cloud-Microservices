@@ -1,6 +1,6 @@
 package com.syphan.practice.auth.dto;
 
-import com.syphan.practice.auth.base.BaseDto;
+import com.syphan.common.api.base.BaseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
