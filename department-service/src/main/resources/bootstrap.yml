@@ -4,6 +4,12 @@ spring:
   cloud:
     config:
       uri: http://localhost:8088
+      fail-fast: true
+      password: 1234
+      username: user
 
-server:
-  port: 8030
+  main:
+    allow-bean-definition-overriding: true #i dont remember why but i think there is a bug with spring cloud and OAuth2ClientContext
+
+#server:
+#  port: 8030
