@@ -8,3 +8,11 @@ spring:
   output:
     ansi:
       enabled: detect
+
+hystrix:
+  command:
+    myusers-service:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000

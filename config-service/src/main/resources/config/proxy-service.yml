@@ -11,7 +11,7 @@ logging:
     console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
               
 zuul:
-  sensitive-headers: Cookie,Set-Cookie
+#  sensitive-headers: Cookie,Set-Cookie
   host:
     time-to-live: -1
     connect-timeout-millis: 60000
@@ -23,6 +23,7 @@ zuul:
       path: /department/**
       serviceId: department-service
     employee:
+      sensitiveHeaders:
       path: /employee/**
       serviceId: employee-service
     organization:
@@ -30,6 +31,7 @@ zuul:
       serviceId: organization-service
     auth:
 #      sensitiveHeaders: Cookie,Set-Cookie
+      sensitiveHeaders:
       path: /uaa/**
       serviceId: auth-service
 
