@@ -1,4 +1,6 @@
 server:
+  servlet:
+    context-path: /gw-created-by-syphan
   port: 8060
 
 zuul:
@@ -13,20 +15,20 @@ zuul:
     auth-service:
       path: /uaa/** #path that will be intercepted
       url: auth-service #which url the request will e mapped to
-#      stripPrefix: false #if zuul should replace the "/uaa/" segment
+      stripPrefix: false #if zuul should replace the "/uaa/" segment
       sensitiveHeaders:
     department:
       path: /departments/**
       serviceId: department-service
-#      stripPrefix: false
+      stripPrefix: false
       sensitiveHeaders:
     employee:
       path: /employees/**
       serviceId: employee-service
-#      stripPrefix: false
+      stripPrefix: false
       sensitiveHeaders:
     organization:
       path: /organizations/**
       serviceId: organization-service
-#      stripPrefix: false
+      stripPrefix: false
       sensitiveHeaders:
