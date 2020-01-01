@@ -1,56 +1,42 @@
 server:
   port: 8060
 
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8061/eureka/
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://localhost:8061/eureka/
 
-logging:
-  pattern: 
-    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
-              
+#logging:
+#  pattern:
+#    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+
 zuul:
-#  sensitive-headers: Cookie,Set-Cookie
-  host:
-    time-to-live: -1
-    connect-timeout-millis: 60000
-    max-per-route-connections: 10000
-    max-total-connections: 5000
+  ignoredServices: '*'
+    host:
+      time-to-live: -1
+      connect-timeout-millis: 60000
+      max-per-route-connections: 60000
+      max-total-connections: 5000
+      socket-timeout-millis: 60000
   routes:
-    sensitiveHeaders: Cookie,Set-Cookie
+    auth-service:
+      path: /uaa/** #path that will be intercepted
+      url: auth-service #which url the request will e mapped to
+      stripPrefix: false #if zuul should replace the "/uaa/" segment
+      sensitiveHeaders:
     department:
       path: /department/**
       serviceId: department-service
+      stripPrefix: false
+      sensitiveHeaders:
     employee:
       sensitiveHeaders:
       path: /employee/**
       serviceId: employee-service
+      stripPrefix: false
+      sensitiveHeaders:
     organization:
       path: /organization/**
       serviceId: organization-service
-    auth:
-#      sensitiveHeaders: Cookie,Set-Cookie
+      stripPrefix: false
       sensitiveHeaders:
-      path: /uaa/**
-      serviceId: auth-service
-
-gateway:
-  cors:
-    allowed-origins: '*'
-    allowed-methods: 'GET,HEAD,POST,PUT,DELETE,OPTIONS,PATCH'
-    allowed-headers: '*'
-    exposed-headers: 'Content-Type,Authorization,Content-Length,X-Requested-With,Link,X-Total-Count'
-    allow-credentials: true
-    max-age: 3600
-
-ribbon:
-  ConnectTimeout: 600000
-  ReadTimeout: 600000
-
-app:
-  jwt:
-    secret: 5d66670787ff43778785318f5a12f8c0
-    avlPeriod: 24h # 24h
-    header: Authorization
-    tokenPrefix: Bearer

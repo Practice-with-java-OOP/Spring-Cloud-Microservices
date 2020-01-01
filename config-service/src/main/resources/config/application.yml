@@ -1,0 +1,31 @@
+#This configuration file will hold common configs to be shared among all files
+eureka:
+  instance:
+    prefer-ip-address: false
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8061/eureka/ #where our registry server is located
+
+security:
+  oauth2:
+    resource:
+      user-info-uri: http://localhost:8060/uaa/user/current #which uri will be used to find the user
+      token-info-uri: http://localhost:8060/uaa/oauth/check_token #add this information
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 20000
+
+ribbon:
+  ConnectTimeout: 20000
+  ReadTimeout: 20000
