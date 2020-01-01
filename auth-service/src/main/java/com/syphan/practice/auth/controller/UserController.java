@@ -19,21 +19,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.security.Principal;
 
 @Api(tags = "User Join Management V1")
 @RestController
 @RequestMapping("/api/v1/users")
-public class UserJoinController {
-
-    @Autowired
-    private HttpServletRequest httpServletRequest;
+public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @GetMapping("/current")
+    public Principal getUser(Principal principal) {
+        return principal;
+    }
 
     @PostMapping("mail-captcha")
     public ResponseEntity<OpenApiWithDataResponse<String>> mailCaptcha(@NotBlank @Email @RequestParam String email) {
@@ -65,12 +67,4 @@ public class UserJoinController {
     public ResponseEntity<OpenApiWithDataResponse<User>> getByUsername(@RequestParam("username") String username) {
         return ResponseEntity.ok(new OpenApiWithDataResponse<>(userService.getByUsername(username)));
     }
-
-//    @GetMapping("/test")
-////    @PreAuthorize("hasAuthority('UPMS_ROLE_READ111')")
-//    public String test(@ApiIgnore UserPrincipal userPrincipal) {
-//        httpServletRequest.getHeader("Authorization");
-//        System.out.println();
-//        return "oke";
-//    }
 }

@@ -1,9 +1,10 @@
-package com.syphan.practice.proxy.gateway.security;
+package com.syphan.practice.auth.security.web;
 
-import com.syphan.common.api.response.OpenApiWithDataResponse;
-import com.syphan.practice.proxy.gateway.client.AuthClient;
-import com.syphan.practice.proxy.gateway.dto.RoleDto;
-import com.syphan.practice.proxy.gateway.dto.UserDto;
+import com.syphan.practice.auth.model.Role;
+import com.syphan.practice.auth.model.User;
+import com.syphan.practice.auth.security.CustomUserDetailsService;
+import com.syphan.practice.auth.security.UserPrincipal;
+import com.syphan.practice.auth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,32 +21,25 @@ import java.util.stream.Collectors;
 public class CustomUserDetailsServiceImpl implements CustomUserDetailsService {
 
     @Autowired
-    private AuthClient authClient;
-
-    @Override
-    public UserDetails loadUserById(Integer id) throws UsernameNotFoundException {
-        OpenApiWithDataResponse<UserDto> user = authClient.getUserById(id);
-        if (user != null) return create(user.getData());
-        else throw new UsernameNotFoundException(String.format("%s%s", "User not found with id: ", id));
-    }
+    private UserService userService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         if (username == null) throw new UsernameNotFoundException("username can not be empty.");
-        UserDto user = authClient.getByUsername(username);
+        User user = userService.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException(String.format("%s %s", "User not found with username:", username));
         }
         return create(user);
     }
 
-    public static UserPrincipal create(UserDto user) {
+    public static UserPrincipal create(User user) {
         Set<String> roleNameSet = new HashSet<>();
-        Set<GrantedAuthority> authorities = user.getRoles().stream().map(RoleDto::getPermissions)
+        Set<GrantedAuthority> authorities = user.getRoles().stream().map(Role::getPermissions)
                 .flatMap(Collection::stream).collect(Collectors.toSet()).stream()
                 .map(permission -> new SimpleGrantedAuthority(permission.getCode())).collect(Collectors.toSet());
 
-        for (RoleDto role : user.getRoles()) {
+        for (Role role : user.getRoles()) {
             roleNameSet.add(role.getCode());
             authorities.add(new SimpleGrantedAuthority(role.getCode()));
         }

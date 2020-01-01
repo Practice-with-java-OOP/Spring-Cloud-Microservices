@@ -9,7 +9,7 @@ eureka:
 security:
   oauth2:
     resource:
-      user-info-uri: http://localhost:8060/uaa/user/current #which uri will be used to find the user
+      user-info-uri: http://localhost:8060/uaa/api/v1/users/current #which uri will be used to find the user
       token-info-uri: http://localhost:8060/uaa/oauth/check_token #add this information
 
 logging:

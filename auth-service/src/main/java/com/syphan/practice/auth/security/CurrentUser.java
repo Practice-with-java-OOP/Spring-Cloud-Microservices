@@ -1,4 +1,4 @@
-package com.syphan.practice.proxy.gateway.security;
+package com.syphan.practice.auth.security;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 

@@ -1,0 +1,4 @@
+server:
+  servlet:
+    context-path: /organizations
+  port: 8020

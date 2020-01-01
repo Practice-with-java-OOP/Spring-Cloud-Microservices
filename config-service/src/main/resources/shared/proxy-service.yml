@@ -1,0 +1,32 @@
+server:
+  port: 8060
+
+zuul:
+  ignoredServices: '*'
+  host:
+    time-to-live: -1
+    connect-timeout-millis: 60000
+    max-per-route-connections: 60000
+    max-total-connections: 5000
+    socket-timeout-millis: 60000
+  routes:
+    auth-service:
+      path: /uaa/** #path that will be intercepted
+      url: auth-service #which url the request will e mapped to
+      stripPrefix: false #if zuul should replace the "/uaa/" segment
+      sensitiveHeaders:
+    department:
+      path: /departments/**
+      serviceId: department-service
+      stripPrefix: false
+      sensitiveHeaders:
+    employee:
+      path: /employees/**
+      serviceId: employee-service
+      stripPrefix: false
+      sensitiveHeaders:
+    organization:
+      path: /organizations/**
+      serviceId: organization-service
+      stripPrefix: false
+      sensitiveHeaders:

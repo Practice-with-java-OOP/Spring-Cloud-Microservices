@@ -1,14 +1,6 @@
-drop table if exists oauth_client_details;
-    create table oauth_client_details (
-    client_id VARCHAR(255) PRIMARY KEY,
-    resource_ids VARCHAR(255),
-    client_secret VARCHAR(255),
-    scope VARCHAR(255),
-    authorized_grant_types VARCHAR(255),
-    web_server_redirect_uri VARCHAR(255),
-    authorities VARCHAR(255),
-    access_token_validity INTEGER,
-    refresh_token_validity INTEGER,
-    additional_information VARCHAR(4096),
-    autoapprove VARCHAR(255)
-    );
+INSERT INTO auth.auth_client_details
+(id, access_token_validity, additional_information, client_id, client_secret, grant_types, redirect_uris, refresh_token_validity, resources, scopes)
+VALUES(1, NULL, NULL, 'browser', '$2a$10$fWNTd3H.u7G/aNROVQSifebOkZ2xzU5nUPOCI2Ld42M8E25/ljJqK', 'refresh_token,password', NULL, NULL, NULL, 'ui');
+INSERT INTO auth.auth_client_details
+(id, access_token_validity, additional_information, client_id, client_secret, grant_types, redirect_uris, refresh_token_validity, resources, scopes)
+VALUES(2, NULL, NULL, 'employee-service', '$2a$10$fWNTd3H.u7G/aNROVQSifebOkZ2xzU5nUPOCI2Ld42M8E25/ljJqK', 'refresh_token,client_credentials', NULL, NULL, NULL, 'server');
