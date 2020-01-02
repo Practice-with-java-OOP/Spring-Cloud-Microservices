@@ -8,10 +8,15 @@ import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.ApiKey;
+import springfox.documentation.service.AuthorizationCodeGrant;
 import springfox.documentation.service.AuthorizationScope;
 import springfox.documentation.service.Contact;
+import springfox.documentation.service.GrantType;
+import springfox.documentation.service.OAuth;
 import springfox.documentation.service.SecurityReference;
 import springfox.documentation.service.SecurityScheme;
+import springfox.documentation.service.TokenEndpoint;
+import springfox.documentation.service.TokenRequestEndpoint;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -21,6 +26,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static com.google.common.collect.Lists.newArrayList;
 
 @Configuration
 @EnableSwagger2
@@ -34,6 +41,7 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .build().apiInfo(apiInfo())
                 .securityContexts(Collections.singletonList(securityContext()))
+                .securitySchemes(Collections.singletonList(securitySchema()))
                 .securitySchemes(Collections.singletonList(apiKey()));
     }
 
@@ -71,9 +79,15 @@ public class SwaggerConfig {
         return new ApiKey(HttpHeaders.COOKIE, "apiKey", "cookie");
     }
 
-//    @Bean
-//    public SecurityConfiguration security() {
-//        return new SecurityConfiguration("client", "secret", "", "",
-//                "Bearer access token", ApiKeyVehicle.HEADER, HttpHeaders.AUTHORIZATION, "");
-//    }
+    private OAuth securitySchema() {
+        List<AuthorizationScope> authorizationScopeList = newArrayList();
+        authorizationScopeList.add(new AuthorizationScope("global", "access all"));
+        List<GrantType> grantTypes = newArrayList();
+        final TokenRequestEndpoint tokenRequestEndpoint = new TokenRequestEndpoint(
+                "http://localhost:8090/oauth/token", "browser", "1234");
+        final TokenEndpoint tokenEndpoint = new TokenEndpoint("http://localhost:8090/oauth/token", "access_token");
+        AuthorizationCodeGrant authorizationCodeGrant = new AuthorizationCodeGrant(tokenRequestEndpoint, tokenEndpoint);
+        grantTypes.add(authorizationCodeGrant);
+        return new OAuth("oauth", authorizationScopeList, grantTypes);
+    }
 }
