@@ -1,5 +1,6 @@
 package com.syphan.practice.auth.swagger;
 
+import org.hibernate.validator.internal.util.CollectionHelper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -8,15 +9,13 @@ import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.ApiKey;
-import springfox.documentation.service.AuthorizationCodeGrant;
 import springfox.documentation.service.AuthorizationScope;
 import springfox.documentation.service.Contact;
 import springfox.documentation.service.GrantType;
 import springfox.documentation.service.OAuth;
+import springfox.documentation.service.ResourceOwnerPasswordCredentialsGrant;
 import springfox.documentation.service.SecurityReference;
 import springfox.documentation.service.SecurityScheme;
-import springfox.documentation.service.TokenEndpoint;
-import springfox.documentation.service.TokenRequestEndpoint;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -24,10 +23,9 @@ import springfox.documentation.swagger.web.ApiKeyVehicle;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import static com.google.common.collect.Lists.newArrayList;
 
 @Configuration
 @EnableSwagger2
@@ -41,8 +39,7 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .build().apiInfo(apiInfo())
                 .securityContexts(Collections.singletonList(securityContext()))
-                .securitySchemes(Collections.singletonList(securitySchema()))
-                .securitySchemes(Collections.singletonList(apiKey()));
+                .securitySchemes(Arrays.asList(securitySchema(), apiKey()));
     }
 
     private ApiInfo apiInfo() {
@@ -67,10 +64,14 @@ public class SwaggerConfig {
 
     private List<SecurityReference> defaultAuth() {
         List<SecurityReference> securityReferences = new ArrayList<>();
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[]{
+        final AuthorizationScope[] authorizationScopes = new AuthorizationScope[3];
+        authorizationScopes[0] = new AuthorizationScope("read", "read all");
+        authorizationScopes[1] = new AuthorizationScope("trust", "trust all");
+        authorizationScopes[2] = new AuthorizationScope("write", "write all");
+        securityReferences.add(new SecurityReference("oauth2", authorizationScopes));
+        securityReferences.add(new SecurityReference("BearerToken", new AuthorizationScope[]{
                 new AuthorizationScope("global", "accessEverything")
-        };
-        securityReferences.add(new SecurityReference("BearerToken", authorizationScopes));
+        }));
         return securityReferences;
     }
 
@@ -80,14 +81,15 @@ public class SwaggerConfig {
     }
 
     private OAuth securitySchema() {
-        List<AuthorizationScope> authorizationScopeList = newArrayList();
-        authorizationScopeList.add(new AuthorizationScope("global", "access all"));
-        List<GrantType> grantTypes = newArrayList();
-        final TokenRequestEndpoint tokenRequestEndpoint = new TokenRequestEndpoint(
-                "http://localhost:8090/oauth/token", "browser", "1234");
-        final TokenEndpoint tokenEndpoint = new TokenEndpoint("http://localhost:8090/oauth/token", "access_token");
-        AuthorizationCodeGrant authorizationCodeGrant = new AuthorizationCodeGrant(tokenRequestEndpoint, tokenEndpoint);
-        grantTypes.add(authorizationCodeGrant);
-        return new OAuth("oauth", authorizationScopeList, grantTypes);
+        List<AuthorizationScope> authorizationScopeList = CollectionHelper.newArrayList();
+        authorizationScopeList.add(new AuthorizationScope("read", "read all"));
+        authorizationScopeList.add(new AuthorizationScope("trust", "trust all"));
+        authorizationScopeList.add(new AuthorizationScope("write", "access all"));
+
+        List<GrantType> grantTypes = CollectionHelper.newArrayList();
+        GrantType passwordCredentialsGrant
+                = new ResourceOwnerPasswordCredentialsGrant("http://localhost:8060/gw-created-by-syphan/uaa/oauth/token");
+        grantTypes.add(passwordCredentialsGrant);
+        return new OAuth("oauth2", authorizationScopeList, grantTypes);
     }
 }

@@ -20,9 +20,6 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @EnableAuthorizationServer
 public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 
-//    @Autowired
-//    private DataSource dataSource;
-
     @Autowired
     @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
@@ -40,12 +37,6 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.withClientDetails(authClientDetailsService);
     }
-
-//    @Bean
-//    public TokenStore tokenStore() {
-////        return new JdbcTokenStore(dataSource);
-//        return new InMemoryTokenStore();
-//    }
 
     @Bean
     public JwtTokenStore tokenStore() {
@@ -74,26 +65,4 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
     public JwtAccessTokenConverter accessTokenConverter() {
         return new JwtAccessTokenConverter();
     }
-
-    /*
-    @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.authenticationManager(this.authenticationManager).tokenStore(tokenStore())
-                .accessTokenConverter(accessTokenConverter());
-    }
-
-    @Override
-    public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
-        oauthServer
-                .tokenKeyAccess("permitAll()")
-                .checkTokenAccess("isAuthenticated()")
-                .passwordEncoder(passwordEncoder)
-                .allowFormAuthenticationForClients();
-    }
-
-    @Bean
-    public JwtAccessTokenConverter accessTokenConverter() {
-        return new JwtAccessTokenConverter();
-    }
-     */
 }

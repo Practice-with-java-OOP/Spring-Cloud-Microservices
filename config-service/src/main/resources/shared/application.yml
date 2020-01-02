@@ -9,8 +9,8 @@ eureka:
 security:
   oauth2:
     resource:
-      user-info-uri: http://localhost:8060/uaa/api/v1/users/current #which uri will be used to find the user
-      token-info-uri: http://localhost:8060/uaa/oauth/check_token #add this information
+      user-info-uri: http://localhost:8060/gw-created-by-syphan/uaa/api/v1/users/current #which uri will be used to find the user
+      token-info-uri: http://localhost:8060/gw-created-by-syphan/uaa/oauth/check_token #add this information
 
 logging:
   level:
@@ -22,10 +22,13 @@ hystrix:
   command:
     default:
       execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 20000
+        timeout:
+          enabled: false
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 20000
+
 
 ribbon:
-  ConnectTimeout: 20000
-  ReadTimeout: 20000
+  ConnectTimeout: 10000
+  ReadTimeout: 10000

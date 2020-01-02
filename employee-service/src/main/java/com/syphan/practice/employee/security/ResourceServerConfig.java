@@ -60,9 +60,22 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/").permitAll()
-                .antMatchers(HttpMethod.GET, "/test").permitAll()
-                .antMatchers(HttpMethod.OPTIONS, "/").permitAll()
+                .antMatchers("/",
+                        "/favicon.ico",
+                        "/**/*.png",
+                        "/**/*.gif",
+                        "/**/*.svg",
+                        "/**/*.jpg",
+                        "/**/*.html",
+                        "/**/*.css",
+                        "/**/*.js",
+                        "/h2-console/**",
+                        "/swagger-resources/**",
+                        "/api-docs",
+                        "/**/v2/api-docs",
+                        "/webjars/**",
+                        "/static/**",
+                        "/actuator/**").permitAll()
                 .anyRequest().authenticated();
     }
 }

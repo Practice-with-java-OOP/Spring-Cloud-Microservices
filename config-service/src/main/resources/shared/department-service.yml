@@ -1,4 +1,2 @@
 server:
-  servlet:
-    context-path: /departments
   port: 8030

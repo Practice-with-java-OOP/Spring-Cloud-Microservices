@@ -1,6 +1,4 @@
 server:
-  servlet:
-    context-path: /employees
   port: 8010
 
 security:
