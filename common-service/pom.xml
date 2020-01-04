@@ -14,5 +14,6 @@
     <modules>
         <module>common-api</module>
         <module>common-dao</module>
+        <module>common-rest</module>
     </modules>
 </project>

@@ -1,7 +1,9 @@
 package com.syphan.practice.auth.controller;
 
-import com.syphan.common.api.response.OpenApiWithDataResponse;
 import com.syphan.common.api.utils.EntityValidationUtils;
+import com.syphan.common.rest.response.OpenApiWithDataResponse;
+import com.syphan.common.rest.security.CurrentUser;
+import com.syphan.common.rest.security.UserPrincipal;
 import com.syphan.practice.auth.dto.AdminCreateUserDto;
 import com.syphan.practice.auth.dto.UserCreateDto;
 import com.syphan.practice.auth.model.User;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
@@ -33,7 +36,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/current")
-    public Principal getUser(Principal principal) {
+    public Principal getUser(Principal principal,@ApiIgnore @CurrentUser UserPrincipal userPrincipal) {
         return principal;
     }
 

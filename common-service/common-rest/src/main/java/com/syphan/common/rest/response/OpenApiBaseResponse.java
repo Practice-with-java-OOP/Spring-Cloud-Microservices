@@ -1,4 +1,4 @@
-package com.syphan.common.api.response;
+package com.syphan.common.rest.response;
 
 import lombok.Getter;
 import lombok.Setter;

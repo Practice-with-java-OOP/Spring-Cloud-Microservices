@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
-@SpringBootApplication(scanBasePackages = {"com.syphan.common.api.handler", "com.syphan.practice.auth"})
+@SpringBootApplication(scanBasePackages = {"com.syphan.common.rest", "com.syphan.practice.auth"})
 @EnableDiscoveryClient
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class AuthServiceApplication {

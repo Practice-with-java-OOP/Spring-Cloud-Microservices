@@ -1,4 +1,4 @@
-package com.syphan.practice.auth.security;
+package com.syphan.common.rest.security;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

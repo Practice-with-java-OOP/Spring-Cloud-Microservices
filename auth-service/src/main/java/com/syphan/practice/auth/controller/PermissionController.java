@@ -1,7 +1,7 @@
 package com.syphan.practice.auth.controller;
 
-import com.syphan.common.api.response.OpenApiWithDataResponse;
 import com.syphan.common.api.utils.EntityValidationUtils;
+import com.syphan.common.rest.response.OpenApiWithDataResponse;
 import com.syphan.practice.auth.dto.PermissionCreateDto;
 import com.syphan.practice.auth.model.Permission;
 import com.syphan.practice.auth.service.PermissionService;
@@ -9,7 +9,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+
+//import org.springframework.security.access.prepost.PreAuthorize;
 
 @Api(tags = "Permission Management V1")
 @RestController

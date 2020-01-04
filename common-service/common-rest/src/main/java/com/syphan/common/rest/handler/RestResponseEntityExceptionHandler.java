@@ -1,9 +1,9 @@
-package com.syphan.common.api.handler;
+package com.syphan.common.rest.handler;
 
 import com.syphan.common.api.exception.BIZException;
-import com.syphan.common.api.response.BindingResultError;
-import com.syphan.common.api.response.BindingResultErrorResponse;
-import com.syphan.common.api.response.OpenApiBaseResponse;
+import com.syphan.common.rest.response.BindingResultError;
+import com.syphan.common.rest.response.BindingResultErrorResponse;
+import com.syphan.common.rest.response.OpenApiBaseResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

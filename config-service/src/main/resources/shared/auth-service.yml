@@ -31,3 +31,10 @@ spring:
         use_sql_comments: true
         format_sql: true
         enable_lazy_load_no_trans: true
+
+app:
+  jwt:
+    secret: 5d66670787ff43778785318f5a12f8c0
+    avlPeriod: 24h # 24h
+    header: Authorization
+    tokenPrefix: Bearer

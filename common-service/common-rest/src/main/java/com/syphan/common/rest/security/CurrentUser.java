@@ -1,4 +1,4 @@
-package com.syphan.practice.auth.security;
+package com.syphan.common.rest.security;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 

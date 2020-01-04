@@ -1,7 +1,7 @@
 package com.syphan.practice.auth.controller;
 
-import com.syphan.common.api.response.OpenApiWithDataResponse;
 import com.syphan.common.api.utils.EntityValidationUtils;
+import com.syphan.common.rest.response.OpenApiWithDataResponse;
 import com.syphan.practice.auth.dto.RoleCreateDto;
 import com.syphan.practice.auth.model.Role;
 import com.syphan.practice.auth.service.RoleService;

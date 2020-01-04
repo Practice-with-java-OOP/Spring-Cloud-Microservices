@@ -9,7 +9,6 @@
         <module>employee-service</module>
         <module>organization-service</module>
         <module>department-service</module>
-        <module>gateway-service</module>
         <module>proxy-service</module>
         <module>auth-service</module>
         <module>common-service</module>
@@ -37,6 +36,11 @@
             <dependency>
                 <groupId>com.syphan.practice</groupId>
                 <artifactId>common-dao</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.syphan.practice</groupId>
+                <artifactId>common-rest</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>

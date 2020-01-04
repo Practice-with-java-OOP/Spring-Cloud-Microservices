@@ -1,7 +1,5 @@
-package com.syphan.practice.auth.security.oauth2;
+package com.syphan.practice.auth.security;
 
-import com.syphan.practice.auth.security.AuthClientDetailsService;
-import com.syphan.practice.auth.security.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -25,9 +23,6 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private CustomUserDetailsService userDetailsService;
-
-    @Autowired
     private AuthClientDetailsService authClientDetailsService;
 
     @Autowired
@@ -48,7 +43,6 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
         endpoints
                 .tokenStore(tokenStore())
                 .authenticationManager(authenticationManager)
-                .userDetailsService(userDetailsService)
                 .accessTokenConverter(accessTokenConverter());
     }
 

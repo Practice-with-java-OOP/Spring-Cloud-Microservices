@@ -1,9 +1,8 @@
-package com.syphan.practice.auth.security.web;
+package com.syphan.practice.auth.security;
 
+import com.syphan.common.rest.security.UserPrincipal;
 import com.syphan.practice.auth.model.Role;
 import com.syphan.practice.auth.model.User;
-import com.syphan.practice.auth.security.CustomUserDetailsService;
-import com.syphan.practice.auth.security.UserPrincipal;
 import com.syphan.practice.auth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,6 +30,13 @@ public class CustomUserDetailsServiceImpl implements CustomUserDetailsService {
             throw new UsernameNotFoundException(String.format("%s %s", "User not found with username:", username));
         }
         return create(user);
+    }
+
+    @Override
+    public UserDetails loadUserById(Integer id) throws UsernameNotFoundException {
+        User user = userService.getById(id);
+        if (user != null) return create(user);
+        else throw new UsernameNotFoundException(String.format("%s%s", "User not found with id: ", id));
     }
 
     public static UserPrincipal create(User user) {

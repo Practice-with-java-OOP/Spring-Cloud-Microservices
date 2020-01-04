@@ -36,7 +36,7 @@ public class EmployeeController {
 
     @PreAuthorize("hasAuthority('UPMS_ROLE_READ')")
     @GetMapping("/{id}")
-    public Employee findById(@PathVariable("id") Long id) {
+    public Employee findById(@PathVariable("id") Long id, @ApiIgnore Principal principal) {
         LOGGER.info("Employee find: id={}", id);
         return repository.findById(id);
     }

@@ -1,4 +1,4 @@
-package com.syphan.common.api.response;
+package com.syphan.common.rest.response;
 
 import com.syphan.common.api.base.wrapper.PageWrapper;
 import lombok.Getter;
