@@ -1,4 +1,4 @@
-package com.syphan.practice.proxy.gateway.config;
+package com.syphan.common.rest.security;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

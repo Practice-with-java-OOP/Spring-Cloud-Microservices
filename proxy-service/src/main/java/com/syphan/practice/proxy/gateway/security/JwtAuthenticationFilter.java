@@ -1,6 +1,6 @@
 package com.syphan.practice.proxy.gateway.security;
 
-import com.syphan.practice.proxy.gateway.config.JwtTokenProperties;
+import com.syphan.common.rest.security.JwtTokenProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.slf4j.Logger;

@@ -50,7 +50,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/webjars/**",
                         "/static/**",
                         "/actuator/**",
-                        "/uaa/oauth/token").permitAll()
+                        "/uaa/oauth/token",
+                        "/employees/").permitAll()
                 .anyRequest().authenticated()
                 .and().headers().frameOptions().disable();
 

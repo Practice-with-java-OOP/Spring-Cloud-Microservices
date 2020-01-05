@@ -25,7 +25,6 @@
     <name>spring-cloud-netflix-microservice</name>
     <description>Demo project for Spring Boot</description>
 
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -52,14 +51,5 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>

@@ -1,5 +1,6 @@
 package com.syphan.practice.auth.security;
 
+import com.syphan.common.rest.security.JwtTokenProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
