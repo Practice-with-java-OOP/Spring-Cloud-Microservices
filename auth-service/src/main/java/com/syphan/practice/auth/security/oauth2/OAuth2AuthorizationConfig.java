@@ -1,6 +1,7 @@
-package com.syphan.practice.auth.security;
+package com.syphan.practice.auth.security.oauth2;
 
 import com.syphan.common.rest.security.JwtTokenProperties;
+import com.syphan.practice.auth.security.AuthClientDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
