@@ -7,11 +7,16 @@ import com.syphan.common.rest.security.UserPrincipal;
 import com.syphan.practice.auth.dto.AdminCreateUserDto;
 import com.syphan.practice.auth.dto.UserCreateDto;
 import com.syphan.practice.auth.model.User;
+import com.syphan.practice.auth.security.JwtTokenProperties;
+import com.syphan.practice.auth.security.test.AdditionalTokenUtils;
 import com.syphan.practice.auth.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,12 +25,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.RequestContext;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.security.Principal;
+import java.util.Map;
 
 @Api(tags = "User Join Management V1")
 @RestController
@@ -35,8 +43,19 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private HttpServletRequest request;
+
+    @Autowired
+    private JwtTokenProperties jwtTokenProperties;
+
     @GetMapping("/current")
-    public Principal getUser(Principal principal,@ApiIgnore @CurrentUser UserPrincipal userPrincipal) {
+    public Principal getUser(Principal principal, @ApiIgnore @CurrentUser UserPrincipal userPrincipal) {
+        String token = request.getHeader("Authorization");
+        AdditionalTokenUtils.verifyToken(token.substring(jwtTokenProperties.getTokenPrefix().length() + 1, token.length()), jwtTokenProperties.getSecret());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Map<String, Object> additionalInfo = getAdditionalInfo(authentication);
+        int userId = (int) additionalInfo.get("user_id");
         return principal;
     }
 
@@ -69,5 +88,10 @@ public class UserController {
     @GetMapping
     public ResponseEntity<OpenApiWithDataResponse<User>> getByUsername(@RequestParam("username") String username) {
         return ResponseEntity.ok(new OpenApiWithDataResponse<>(userService.getByUsername(username)));
+    }
+
+    private Map<String, Object> getAdditionalInfo(Authentication authentication) {
+        OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) authentication.getDetails();
+        return (Map<String, Object>) details.getDecodedDetails();
     }
 }
