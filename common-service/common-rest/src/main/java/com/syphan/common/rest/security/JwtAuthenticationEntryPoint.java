@@ -1,4 +1,4 @@
-package com.syphan.practice.proxy.gateway.security;
+package com.syphan.common.rest.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.syphan.common.rest.response.OpenApiBaseResponse;

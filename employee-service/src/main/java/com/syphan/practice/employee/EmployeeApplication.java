@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.syphan.common.rest", "com.syphan.practice.employee"})
 @EnableDiscoveryClient
 @EnableResourceServer
 @EnableOAuth2Sso

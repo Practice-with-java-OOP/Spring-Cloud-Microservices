@@ -47,6 +47,10 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
                 httpStatus = HttpStatus.CONFLICT;
                 break;
             }
+            case NOT_FOUND: {
+                httpStatus = HttpStatus.NOT_FOUND;
+                break;
+            }
             default: {
                 httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
             }

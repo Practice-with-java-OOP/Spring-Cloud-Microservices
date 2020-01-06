@@ -1,5 +1,6 @@
 package com.syphan.practice.proxy.gateway.security;
 
+import com.syphan.common.rest.security.JwtAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -51,7 +52,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/static/**",
                         "/actuator/**",
                         "/uaa/oauth/token",
-                        "/employees/").permitAll()
+                        "/employees/**",
+                        "/uaa/api/v1/auth/sign-in").permitAll()
                 .anyRequest().authenticated()
                 .and().headers().frameOptions().disable();
 

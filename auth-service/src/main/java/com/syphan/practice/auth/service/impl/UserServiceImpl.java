@@ -3,8 +3,10 @@ package com.syphan.practice.auth.service.impl;
 import com.syphan.common.api.enumclass.ErrType;
 import com.syphan.common.api.exception.BIZException;
 import com.syphan.common.dao.service.impl.BaseServiceImpl;
+import com.syphan.practice.auth.client.AuthClient;
 import com.syphan.practice.auth.dto.AdminCreateUserDto;
 import com.syphan.practice.auth.dto.UserCreateDto;
+import com.syphan.practice.auth.dto.UserSignIn;
 import com.syphan.practice.auth.model.Role;
 import com.syphan.practice.auth.model.User;
 import com.syphan.practice.auth.repository.RoleRepository;
@@ -12,8 +14,10 @@ import com.syphan.practice.auth.repository.UserRepository;
 import com.syphan.practice.auth.service.UserService;
 import com.syphan.practice.auth.util.GenerateAvatarUtils;
 import com.syphan.practice.auth.util.Utils;
+import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +34,9 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements U
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private AuthClient authClient;
 
     @Autowired
     public UserServiceImpl(UserRepository repository) {
@@ -121,5 +128,16 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements U
         User user = repository.findByUsername(username);
         if (user == null) throw BIZException.buildBIZException(ErrType.NOT_FOUND, "khong thay", "not found");
         return user;
+    }
+
+    @Override
+    public OAuth2AccessToken signIn(UserSignIn dto) {
+        try {
+            return authClient.getAccessToken("password",
+                    "browser", "1234", dto.getUsername(), dto.getPassword());
+        } catch (FeignException ex) {
+            throw BIZException.buildBIZException(ErrType.CONSTRAINT, "khong duoc",
+                    "khong duoc");
+        }
     }
 }

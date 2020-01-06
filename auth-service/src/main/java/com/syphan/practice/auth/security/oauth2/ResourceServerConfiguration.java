@@ -1,5 +1,6 @@
 package com.syphan.practice.auth.security.oauth2;
 
+import com.syphan.common.rest.security.JwtAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -13,14 +14,18 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 @Configuration
 @EnableResourceServer
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
+
     @Autowired
     private TokenStore tokenStore;
 
+    @Autowired
+    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.exceptionHandling()
-                .and().csrf().disable()
-                .sessionManagement()
+        http.cors().and()
+                .csrf().disable().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
@@ -42,7 +47,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                         "/webjars/**",
                         "/static/**",
                         "/actuator/**",
-                        "/auth/sign-in").permitAll()
+                        "/api/v1/auth/sign-in").permitAll()
                 .anyRequest().authenticated()
                 .and().headers().frameOptions().disable();
     }

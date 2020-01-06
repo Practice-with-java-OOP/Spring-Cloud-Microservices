@@ -1,6 +1,5 @@
 package com.syphan.practice.auth.security;
 
-import com.syphan.common.rest.security.UserPrincipal;
 import com.syphan.practice.auth.model.Role;
 import com.syphan.practice.auth.model.User;
 import com.syphan.practice.auth.service.UserService;

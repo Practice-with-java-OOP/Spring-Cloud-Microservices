@@ -1,9 +1,6 @@
-package com.syphan.common.rest.security;
+package com.syphan.practice.auth.security;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -15,6 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Setter
 @Getter
+@Builder
 public class UserPrincipal implements UserDetails {
     private int id;
 

@@ -23,7 +23,7 @@ public class EmployeeController {
     private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
 
     @Autowired
-    EmployeeRepository repository;
+    private EmployeeRepository repository;
 
     @Autowired
     private HttpServletRequest httpServletRequest;
@@ -34,7 +34,7 @@ public class EmployeeController {
         return repository.add(employee);
     }
 
-    @PreAuthorize("hasAuthority('UPMS_ROLE_READ')")
+    @PreAuthorize("hasAuthority('UPMS_ROLE_READdsada')")
     @GetMapping("/{id}")
     public Employee findById(@PathVariable("id") Long id, @ApiIgnore Principal principal) {
         LOGGER.info("Employee find: id={}", id);

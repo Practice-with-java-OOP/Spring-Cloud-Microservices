@@ -4,7 +4,9 @@ import com.syphan.common.api.exception.BIZException;
 import com.syphan.common.dao.service.BaseService;
 import com.syphan.practice.auth.dto.AdminCreateUserDto;
 import com.syphan.practice.auth.dto.UserCreateDto;
+import com.syphan.practice.auth.dto.UserSignIn;
 import com.syphan.practice.auth.model.User;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
 
 public interface UserService extends BaseService<User, Integer> {
 
@@ -17,4 +19,6 @@ public interface UserService extends BaseService<User, Integer> {
     User findByUsername(String username) throws BIZException;
 
     User getByUsername(String username) throws BIZException;
+
+    OAuth2AccessToken signIn(UserSignIn dto);
 }

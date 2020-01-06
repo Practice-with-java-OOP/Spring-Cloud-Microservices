@@ -1,5 +1,6 @@
 package com.syphan.practice.employee.security;
 
+import com.syphan.common.rest.security.JwtAuthenticationEntryPoint;
 import feign.RequestInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,7 +11,6 @@ import org.springframework.cloud.security.oauth2.client.feign.OAuth2FeignRequest
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestOperations;
@@ -34,6 +34,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         this.sso = sso;
         this.oAuth2ClientContext = oAuth2ClientContext;
     }
+
+    @Autowired
+    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Bean
     @ConfigurationProperties(prefix = "security.oauth2.client")
@@ -59,7 +62,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.csrf().disable().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .and()
+                .authorizeRequests()
                 .antMatchers("/",
                         "/favicon.ico",
                         "/**/*.png",
