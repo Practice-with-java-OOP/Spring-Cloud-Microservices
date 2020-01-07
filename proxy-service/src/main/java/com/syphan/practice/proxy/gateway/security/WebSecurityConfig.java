@@ -30,12 +30,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.cors().and()
-                .csrf().disable().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .csrf().disable()
+                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/",
+                .antMatchers(
                         "/favicon.ico",
                         "/**/*.png",
                         "/**/*.gif",

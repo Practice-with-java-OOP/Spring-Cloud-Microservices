@@ -6,9 +6,6 @@ security:
     client:
       clientId: employee-service
       clientSecret: 1234
-      accessTokenUri: http://localhost:8090/uaa/oauth/token
-      grant-type: client_credentials
-      scope: server
 
 feign:
   hystrix:
