@@ -20,9 +20,10 @@ public class DepartmentController {
     private static final Logger LOGGER = LoggerFactory.getLogger(DepartmentController.class);
 
     @Autowired
-    DepartmentRepository repository;
+    private DepartmentRepository repository;
+
     @Autowired
-    EmployeeClient employeeClient;
+    private EmployeeClient employeeClient;
 
     @PostMapping("/")
     public Department add(@RequestBody Department department) {

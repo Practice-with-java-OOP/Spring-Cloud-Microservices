@@ -1,2 +1,15 @@
 server:
   port: 8030
+
+security:
+  oauth2:
+    client:
+      clientId: department-service
+      clientSecret: 1234
+      accessTokenUri: http://localhost:8090/oauth/token
+      grant-type: client_credentials
+      scope: server
+
+feign:
+  hystrix:
+    enabled: true
