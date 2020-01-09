@@ -53,7 +53,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/actuator/**",
                         "/uaa/oauth/token",
                         "/employees/",
-                        "/uaa/api/v1/auth/sign-in").permitAll()
+                        "/uaa/api/v1/auth/sign-in",
+                        "/departments/**",
+                        "/organizations/**").permitAll()
                 .anyRequest().authenticated()
                 .and().headers().frameOptions().disable();
 

@@ -34,7 +34,7 @@ public class EmployeeController {
         return repository.add(employee);
     }
 
-    @PreAuthorize("hasAuthority('UPMS_ROLE_READdsada')")
+    @PreAuthorize("hasAuthority('UPMS_ROLE_READ')")
     @GetMapping("/{id}")
     public Employee findById(@PathVariable("id") Long id, @ApiIgnore Principal principal) {
         LOGGER.info("Employee find: id={}", id);
@@ -44,6 +44,7 @@ public class EmployeeController {
     @GetMapping("/")
     public List<Employee> findAll(@ApiIgnore Principal principal) {
         httpServletRequest.getHeader("Authorization");
+        httpServletRequest.getHeader("test");
         LOGGER.info("Employee find");
         return repository.findAll();
     }
