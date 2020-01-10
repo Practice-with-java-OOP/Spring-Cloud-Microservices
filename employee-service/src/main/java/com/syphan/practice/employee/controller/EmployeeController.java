@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -41,10 +42,14 @@ public class EmployeeController {
         return repository.findById(id);
     }
 
+    /**
+     * Can using @RequestHeader to get value from header
+     * or using httpServletRequest.getHeader("Authorization") to get value
+     */
     @GetMapping("/")
-    public List<Employee> findAll(@ApiIgnore Principal principal) {
+    public List<Employee> findAll(@ApiIgnore Principal principal,
+                                  @ApiIgnore @RequestHeader("test") String test) {
         httpServletRequest.getHeader("Authorization");
-        httpServletRequest.getHeader("test");
         LOGGER.info("Employee find");
         return repository.findAll();
     }
