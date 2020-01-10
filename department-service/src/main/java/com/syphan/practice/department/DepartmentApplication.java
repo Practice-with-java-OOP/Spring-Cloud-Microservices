@@ -5,13 +5,11 @@ import com.syphan.practice.department.repository.DepartmentRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
 @SpringBootApplication(scanBasePackages = {"com.syphan.common.rest", "com.syphan.practice.department"})
-@EnableDiscoveryClient
 @EnableOAuth2Sso
 @EnableFeignClients
 @EnableGlobalMethodSecurity(prePostEnabled = true)

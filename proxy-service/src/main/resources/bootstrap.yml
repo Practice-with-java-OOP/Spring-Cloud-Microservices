@@ -7,6 +7,18 @@ spring:
       fail-fast: true
       password: 1234
       username: user
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        #        instance-id: ${spring.application.name}:${server.port}
+        #        instanceZone: zone1
+        register: false
+        registerHealthCheck: false
+#        tags: zone=zone1
+
+server:
+  port: 8060
 
 #  output:
 #    ansi:

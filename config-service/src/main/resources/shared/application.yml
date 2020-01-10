@@ -1,10 +1,10 @@
 #This configuration file will hold common configs to be shared among all files
-eureka:
-  instance:
-    prefer-ip-address: false
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8061/eureka/ #where our registry server is located
+spring:
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+  output.ansi.enabled: ALWAYS
 
 security:
   oauth2:
