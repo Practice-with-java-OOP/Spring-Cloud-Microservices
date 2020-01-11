@@ -7,6 +7,9 @@ spring:
       fail-fast: true
       password: 1234
       username: user
+  zipkin:
+    service:
+      name: department-service
 
   main:
     allow-bean-definition-overriding: true #i dont remember why but i think there is a bug with spring cloud and OAuth2ClientContext

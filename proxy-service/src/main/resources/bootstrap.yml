@@ -7,6 +7,9 @@ spring:
       fail-fast: true
       password: 1234
       username: user
+  zipkin:
+    service:
+      name: proxy-service
 
 #  output:
 #    ansi:

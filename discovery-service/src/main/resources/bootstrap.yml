@@ -7,3 +7,6 @@ spring:
       fail-fast: true #the service will not run if it can't reach the config-service
       password: 1234 #password of the config-service
       username: user #username of the config-service http://localhost:8888/registry-service/default
+  zipkin:
+    service:
+      name: discovery-service
