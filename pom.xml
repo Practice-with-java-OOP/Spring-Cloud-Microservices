@@ -12,6 +12,7 @@
         <module>proxy-service</module>
         <module>auth-service</module>
         <module>common-service</module>
+        <module>zipkin-server</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
