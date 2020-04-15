@@ -136,8 +136,8 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements U
             return authClient.getAccessToken("password",
                     "browser", "1234", dto.getUsername(), dto.getPassword());
         } catch (FeignException ex) {
-            throw BIZException.buildBIZException(ErrType.CONSTRAINT, "khong duoc",
-                    "khong duoc");
+            throw BIZException.buildBIZException(ErrType.BAD_REQUEST, "Login.Error",
+                    "Username or password is incorrect.");
         }
     }
 }

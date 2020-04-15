@@ -1,4 +1,4 @@
-package com.syphan.practice.proxy.gateway.config;
+package com.syphan.practice.auth.config;//package com.syphan.practice.proxy.gateway.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
