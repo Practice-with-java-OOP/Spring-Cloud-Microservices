@@ -1,8 +1,13 @@
 package com.syphan.practice.department.controller;
 
+import com.syphan.grpc.protoFile.EmployeeServiceGrpc;
+import com.syphan.grpc.protoFile.Employees;
 import com.syphan.practice.department.client.EmployeeClient;
 import com.syphan.practice.department.model.Department;
+import com.syphan.practice.department.model.Employee;
 import com.syphan.practice.department.repository.DepartmentRepository;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -51,9 +57,23 @@ public class DepartmentController {
 
     @GetMapping("/organization/{organizationId}/with-employees")
     public List<Department> findByOrganizationWithEmployees(@PathVariable("organizationId") Long organizationId) {
+        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9089).usePlaintext().build();
+        EmployeeServiceGrpc.EmployeeServiceBlockingStub client = EmployeeServiceGrpc.newBlockingStub(channel);
         LOGGER.info("Department find: organizationId={}", organizationId);
         List<Department> departments = repository.findByOrganization(organizationId);
-        departments.forEach(d -> d.setEmployees(employeeClient.findByDepartment(d.getId())));
+        for (Department department : departments) {
+            List<Employee> employees = new ArrayList<>();
+            Employees.EmployeeList employeeList = client.findByDepartment(Employees.Id.newBuilder().setId(department.getId()).build());
+            for (Employees.Employee employee : employeeList.getEmployeesList()) {
+                employees.add(Employee.builder()
+                        .id(employee.getId())
+                        .name(employee.getName())
+                        .age(employee.getAge())
+                        .position(employee.getPosition())
+                        .build());
+            }
+            department.setEmployees(employees);
+        }
         return departments;
     }
 
