@@ -2,12 +2,7 @@ package com.syphan.practice.employee;
 
 import com.syphan.practice.employee.model.Employee;
 import com.syphan.practice.employee.repository.EmployeeRepository;
-import com.syphan.practice.employee.service.EmployeeService;
-import io.grpc.Server;
-import io.grpc.ServerBuilder;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
@@ -20,10 +15,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 @EnableOAuth2Sso
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Slf4j
-public class EmployeeApplication implements CommandLineRunner {
-
-    @Autowired
-    private EmployeeService employeeService;
+public class EmployeeApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(EmployeeApplication.class, args);
@@ -43,14 +35,5 @@ public class EmployeeApplication implements CommandLineRunner {
         repository.add(new Employee(2L, 4L, "Steve Franklin", 25, "Developer"));
         repository.add(new Employee(2L, 4L, "Elisabeth Smith", 30, "Developer"));
         return repository;
-    }
-
-    @Override
-    public void run(String... args) throws Exception {
-        log.info("Starting grpc server");
-        Server server = ServerBuilder.forPort(9089).addService(employeeService).build(); // create a instance of server
-
-        server.start();
-        log.info("Server Started at " + server.getPort());
     }
 }
