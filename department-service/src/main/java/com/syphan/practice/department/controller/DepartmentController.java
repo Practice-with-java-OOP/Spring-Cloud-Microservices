@@ -2,7 +2,6 @@ package com.syphan.practice.department.controller;
 
 import com.syphan.grpc.protoFile.EmployeeServiceGrpc;
 import com.syphan.grpc.protoFile.Employees;
-import com.syphan.practice.department.client.EmployeeClient;
 import com.syphan.practice.department.model.Department;
 import com.syphan.practice.department.model.Employee;
 import com.syphan.practice.department.repository.DepartmentRepository;
@@ -27,9 +26,6 @@ public class DepartmentController {
 
     @Autowired
     private DepartmentRepository repository;
-
-    @Autowired
-    private EmployeeClient employeeClient;
 
     @PostMapping("/")
     public Department add(@RequestBody Department department) {
@@ -57,7 +53,7 @@ public class DepartmentController {
 
     @GetMapping("/organization/{organizationId}/with-employees")
     public List<Department> findByOrganizationWithEmployees(@PathVariable("organizationId") Long organizationId) {
-        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9089).usePlaintext().build();
+        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 8085).usePlaintext().build();
         EmployeeServiceGrpc.EmployeeServiceBlockingStub client = EmployeeServiceGrpc.newBlockingStub(channel);
         LOGGER.info("Department find: organizationId={}", organizationId);
         List<Department> departments = repository.findByOrganization(organizationId);

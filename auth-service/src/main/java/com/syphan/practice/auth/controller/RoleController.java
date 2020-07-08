@@ -31,6 +31,6 @@ public class RoleController {
     public ResponseEntity<OpenApiWithDataResponse<Role>> addRole(@Valid @RequestBody RoleCreateDto reqParam,
                                                                  BindingResult bindingResult) {
         EntityValidationUtils.processBindingResults(bindingResult);
-        return ResponseEntity.ok(new OpenApiWithDataResponse<Role>(roleService.create(reqParam)));
+        return ResponseEntity.ok(new OpenApiWithDataResponse<>(roleService.create(reqParam)));
     }
 }

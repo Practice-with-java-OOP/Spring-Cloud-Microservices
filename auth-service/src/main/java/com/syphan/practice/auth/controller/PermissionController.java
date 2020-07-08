@@ -33,7 +33,7 @@ public class PermissionController {
     public ResponseEntity<OpenApiWithDataResponse<Permission>> create(@Valid @RequestBody PermissionCreateDto reqPram,
                                                                       BindingResult bindingResult) {
         EntityValidationUtils.processBindingResults(bindingResult);
-        return ResponseEntity.ok(new OpenApiWithDataResponse<Permission>(service.create(reqPram)));
+        return ResponseEntity.ok(new OpenApiWithDataResponse<>(service.create(reqPram)));
     }
 
 }

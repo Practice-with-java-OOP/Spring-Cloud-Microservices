@@ -50,7 +50,7 @@ public class UserController {
     public ResponseEntity<OpenApiWithDataResponse<User>> signUp(@Valid @RequestBody UserCreateDto reqPram,
                                                                 BindingResult bindingResult) {
         EntityValidationUtils.processBindingResults(bindingResult);
-        return ResponseEntity.ok(new OpenApiWithDataResponse<User>(userService.signUp(reqPram)));
+        return ResponseEntity.ok(new OpenApiWithDataResponse<>(userService.signUp(reqPram)));
     }
 
     @ApiOperation("Admin create user")
@@ -58,7 +58,7 @@ public class UserController {
     public ResponseEntity<OpenApiWithDataResponse<User>> adminCreateUser(@Valid @RequestBody AdminCreateUserDto reqPram,
                                                                          BindingResult bindingResult) {
         EntityValidationUtils.processBindingResults(bindingResult);
-        return ResponseEntity.ok(new OpenApiWithDataResponse<User>(userService.adminCreateUser(reqPram)));
+        return ResponseEntity.ok(new OpenApiWithDataResponse<>(userService.adminCreateUser(reqPram)));
     }
 
     @GetMapping("{id}")
