@@ -63,6 +63,13 @@
             <groupId>io.grpc</groupId>
             <artifactId>grpc-netty-shaded</artifactId>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.github.lognet/grpc-spring-boot-starter -->
+        <dependency>
+            <groupId>io.github.lognet</groupId>
+            <artifactId>grpc-spring-boot-starter</artifactId>
+            <version>3.5.5</version>
+        </dependency>
     </dependencies>
 
 </project>
