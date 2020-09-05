@@ -1,6 +1,7 @@
 package com.syphan.practice.auth.security.oauth2;
 
 import com.syphan.common.rest.security.JwtAuthenticationEntryPoint;
+import com.syphan.practice.auth.security.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -10,6 +11,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableResourceServer
@@ -20,6 +22,9 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+
+    @Autowired
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
@@ -50,6 +55,9 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                         "/api/v1/auth/sign-in").permitAll()
                 .anyRequest().authenticated()
                 .and().headers().frameOptions().disable();
+
+        http.headers().cacheControl();
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override

@@ -33,19 +33,19 @@ public class SwaggerProxyConfig {
             /**
              * custom
              */
-            resources.add(createResource("employee-service", "/employees/v2/api-docs", "2.0"));
-            resources.add(createResource("department-service", "/departments/v2/api-docs", "2.0"));
-            resources.add(createResource("organization-service", "/organizations/v2/api-docs", "2.0"));
-            resources.add(createResource("auth-service", "/uaa/v2/api-docs", "2.0"));
+            resources.add(createResource("employee-service", "/employees/v2/api-docs"));
+            resources.add(createResource("department-service", "/departments/v2/api-docs"));
+            resources.add(createResource("organization-service", "/organizations/v2/api-docs"));
+            resources.add(createResource("auth-service", "/uaa/v2/api-docs"));
             return resources;
         };
     }
 
-    private SwaggerResource createResource(String name, String location, String version) {
+    private SwaggerResource createResource(String name, String location) {
         SwaggerResource swaggerResource = new SwaggerResource();
         swaggerResource.setName(name);
         swaggerResource.setLocation(location);
-        swaggerResource.setSwaggerVersion(version);
+        swaggerResource.setSwaggerVersion("2.0");
         return swaggerResource;
     }
 }

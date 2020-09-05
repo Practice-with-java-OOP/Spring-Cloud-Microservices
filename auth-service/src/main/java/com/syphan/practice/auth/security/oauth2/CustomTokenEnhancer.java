@@ -1,6 +1,6 @@
 package com.syphan.practice.auth.security.oauth2;
 
-import com.syphan.practice.auth.security.UserPrincipal;
+import com.syphan.common.rest.security.UserPrincipal;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;

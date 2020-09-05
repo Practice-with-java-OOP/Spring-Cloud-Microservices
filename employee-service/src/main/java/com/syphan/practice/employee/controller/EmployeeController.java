@@ -1,8 +1,9 @@
 package com.syphan.practice.employee.controller;
 
 import com.syphan.common.api.base.wrapper.PageWrapper;
-import com.syphan.common.rest.response.OpenApiWithDataResponse;
 import com.syphan.common.rest.response.OpenApiWithPageResponse;
+import com.syphan.common.rest.security.CurrentUser;
+import com.syphan.common.rest.security.UserPrincipal;
 import com.syphan.practice.employee.model.Employee;
 import com.syphan.practice.employee.repository.EmployeeRepository;
 import io.swagger.annotations.ApiImplicitParam;
@@ -45,7 +46,8 @@ public class EmployeeController {
 
     @PreAuthorize("hasAuthority('UPMS_ROLE_READ')")
     @GetMapping("/{id}")
-    public Employee findById(@PathVariable("id") Long id, @ApiIgnore Principal principal) {
+    public Employee findById(@PathVariable("id") Long id, @ApiIgnore Principal principal,
+                             @ApiIgnore @CurrentUser UserPrincipal userPrincipal) {
         LOGGER.info("Employee find: id={}", id);
         return repository.findById(id);
     }

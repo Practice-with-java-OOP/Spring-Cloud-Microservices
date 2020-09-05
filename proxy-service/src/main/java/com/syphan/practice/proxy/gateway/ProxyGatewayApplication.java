@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 
-@SpringBootApplication(scanBasePackages = {"com.syphan.common.rest", "com.syphan.practice.proxy.gateway"})
+@SpringBootApplication(scanBasePackages = {"com.syphan.practice.proxy.gateway"})
 @EnableZuulProxy
 @EnableDiscoveryClient
 public class ProxyGatewayApplication {

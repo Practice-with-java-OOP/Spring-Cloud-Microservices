@@ -1,5 +1,6 @@
 package com.syphan.practice.auth.security;
 
+import com.syphan.common.rest.security.UserPrincipal;
 import com.syphan.practice.auth.model.Role;
 import com.syphan.practice.auth.model.User;
 import com.syphan.practice.auth.service.UserService;
@@ -22,7 +23,7 @@ public class CustomUserDetailsServiceImpl implements CustomUserDetailsService {
     private UserService userService;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) {
         if (username == null) throw new UsernameNotFoundException("username can not be empty.");
         User user = userService.findByUsername(username);
         if (user == null) {
@@ -32,7 +33,7 @@ public class CustomUserDetailsServiceImpl implements CustomUserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserById(Integer id) throws UsernameNotFoundException {
+    public UserDetails loadUserById(Integer id) {
         User user = userService.getById(id);
         if (user != null) return create(user);
         else throw new UsernameNotFoundException(String.format("%s%s", "User not found with id: ", id));

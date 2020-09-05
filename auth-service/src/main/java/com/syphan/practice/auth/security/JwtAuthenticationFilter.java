@@ -1,14 +1,13 @@
-package com.syphan.practice.proxy.gateway.security;
+package com.syphan.practice.auth.security;
 
 import com.syphan.common.rest.security.JwtTokenProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -19,15 +18,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
+@Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    private Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
     @Autowired
     private JwtTokenProperties jwtTokenProperties;
+
+    @Autowired
+    private CustomUserDetailsService userDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
@@ -35,21 +35,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String token = getJwtTokenFromRequest(httpServletRequest);
         if (token != null) {
-            try {
-                Claims claims = Jwts.parser()
-                        .setSigningKey(jwtTokenProperties.getSecret().getBytes(StandardCharsets.UTF_8))
-                        .parseClaimsJws(token)
-                        .getBody();
-                String username = claims.getSubject();
-                List<String> authorities = claims.get("authorities", List.class);
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                        username, null, authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
-                );
-                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-            } catch (Exception ex) {
-                logger.warn("Could not set user authentication in security context.", ex);
-            }
+            Claims claims = Jwts.parser()
+                    .setSigningKey(jwtTokenProperties.getSecret().getBytes(StandardCharsets.UTF_8))
+                    .parseClaimsJws(token)
+                    .getBody();
+            Integer id = claims.get("user_id", Integer.class);
+            UserDetails userDetails = userDetailsService.loadUserById(id);
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                    userDetails, null, userDetails.getAuthorities());
+
+            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
+            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         }
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
